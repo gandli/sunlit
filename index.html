@@ -102,6 +102,11 @@
       filter: url(#wind);
       mix-blend-mode: multiply;
       animation: billow 8s ease-in-out infinite;
+
+      @media (max-width: 768px) {
+        right: -900px;
+        opacity: 0.8;
+      }
     }
 
     @keyframes billow {
@@ -136,6 +141,10 @@
         var(--shadow) 46px
       );
       mix-blend-mode: multiply;
+
+      @media (max-width: 768px) {
+        opacity: 0.9;
+      }
     }
 
     /* Progressive blur - 4 layers increasing blur */
@@ -188,26 +197,26 @@
       z-index: 1;
       margin: 0 auto;
       max-width: 800px;
-      padding: 40vh 0;
+      padding: 40vh 2rem;
       color: var(--dark);
       isolation: isolate;
     }
 
     article h1 {
-      font-size: 3rem;
+      font-size: clamp(2rem, 8vw, 3rem);
       font-weight: 700;
       margin-bottom: 2rem;
     }
 
     article p {
-      font-size: 1.5rem;
+      font-size: clamp(1.125rem, 4vw, 1.5rem);
       line-height: 1.6;
       margin-bottom: 1rem;
       opacity: 0.9;
     }
 
     article pre {
-      font-size: 1.125rem;
+      font-size: clamp(1rem, 3vw, 1.125rem);
       font-family: monospace;
       margin-top: 0.8rem;
       opacity: 0.8;
