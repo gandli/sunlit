@@ -235,22 +235,5 @@
     <p>[press space to toggle the sun]</p>
   </article>
 
-  <script>
-    // Optional: match original sunlit behavior - space to toggle day/night
-    let night = true;
-    document.addEventListener('keydown', function(event) {
-      if (event.keyCode === 32) {
-        night = !night;
-        if (night) {
-          document.documentElement.style.setProperty('--light', 'var(--night)');
-          document.documentElement.style.setProperty('--dark', 'var(--day)');
-        } else {
-          document.documentElement.style.setProperty('--light', 'var(--day)');
-          document.documentElement.style.setProperty('--dark', 'var(--night)');
-        }
-        event.preventDefault();
-      }
-    });
-  </script>
 </body>
 </html>
