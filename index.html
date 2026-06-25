@@ -276,7 +276,30 @@
   <article>
     <h1>sunlit</h1>
     <p>inspired by <a href="https://daylightcomputer.com/">daylight computer</a> and <a href="https://www.chloeyan.me/">chloe yan's</a> <a href="https://www.sunlit.place/">sunlit place</a></p>
-    <pre>[zero JavaScript adaptation from <code>jackyzha0/sunlit</code>]</pre>
+    <pre>[click or press <code>space</code> to toggle the sun]</pre>
   </article>
+
+  <script>
+    // Minimal toggle script - zero JS for effect, only for user interaction toggle
+    let dark = true;
+    function toggle() {
+      dark = !dark;
+      if (dark) {
+        document.body.style.setProperty('--light', 'var(--night)');
+        document.body.style.setProperty('--dark', 'var(--day)');
+        document.body.style.setProperty('--shadow', '#030307');
+        document.body.style.setProperty('--bounce-light', '#1b293f');
+      } else {
+        document.body.style.setProperty('--light', 'var(--day)');
+        document.body.style.setProperty('--dark', 'var(--night)');
+        document.body.style.setProperty('--shadow', '#1a1917');
+        document.body.style.setProperty('--bounce-light', '#f5d7a6');
+      }
+    }
+    document.addEventListener('keydown', e => {
+      if (e.keyCode === 32) { toggle(); e.preventDefault(); }
+    });
+    document.addEventListener('click', toggle);
+  </script>
 </body>
 </html>

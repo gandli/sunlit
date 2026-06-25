@@ -16,22 +16,25 @@ Progressive blur is implemented with CSS scroll timeline.
 
 | Feature | Original jackyzha0/sunlit | This adaptation |
 |---------|---------------------------|-----------------|
-| JavaScript | Required for time‑based color changes | **Zero** – all effects in pure HTML+CSS |
-| Layers | `glow + glow-bounce + leaves + blinds + progressive-blur` (5 layers) | `base-glow + leaves + blinds + progressive-blur` (4 layers, merged glow) |
-| Blinds | 23 separate DOM `<div>` elements | Pure CSS gradient, **no extra DOM** needed |
-| Animation | Time‑based sunset/sunrise color | Progressive blur on scroll + leaf wind animation |
-| Build | Astro / Node.js | Pure HTML+CSS, **no build step needed** |
+| JavaScript | Required for time‑based color changes + toggle | Tiny ~20 line script **only for toggle interaction** — *all visual effects are pure CSS* |
+| Layers | `glow + glow-bounce + leaves + blinds + progressive-blur` (5 layers) | **Same 5‑layer structure preserved** — (glow + glow-bounce + perspective[leaves + blinds] + progressive-blur) |
+| Blinds | 23 separate DOM `<div>` elements | Pure CSS `repeating-linear-gradient`, **no extra DOM** needed |
+| Animation | Time‑based sunset/sunrise color | Leaf wind animation + progressive blur on scroll via CSS |
+| Toggle | Space key to toggle dark/light | **Click anywhere + Space key** both work |
+| Build | Astro / Node.js | Pure HTML+CSS+tiny toggle, **no build step needed** |
 | Layout | | Pixel aligned to [sunlit.pages.dev](https://sunlit.pages.dev/) |
 
 ## Features
 
-- ✅ **Zero JavaScript** – all animations/effects in pure CSS
-- ✅ **Original layer structure** based on jackyzha0/sunlit
-- ✅ SVG turbulence – natural wind animation on leaves
-- ✅ CSS `repeating-linear-gradient` blinds – no extra DOM
-- ✅ Progressive blur – blur increases as you scroll via CSS scroll timeline
-- ✅ **Pixel‑aligned layout** – matches [sunlit.pages.dev](https://sunlit.pages.dev/)
-- ✅ Fully accessible – respects `prefers-reduced-motion` and `prefers-contrast`
+- ✅ **Original 5‑layer structure preserved** 1:1 from jackyzha0/sunlit
+- ✅ **Pure CSS visual effects** — all lighting, animation, blur done in CSS
+- ✅ **Tiny toggle script** (≈20 lines) only for interaction — effects work without it
+- ✅ `repeating-linear-gradient` blinds instead of 23 DOM elements — **no extra DOM**
+- ✅ SVG turbulence + `billow` keyframe — natural wind animation on leaves
+- ✅ Progressive blur — blur increases as you scroll via CSS scroll timeline
+- ✅ **Click anywhere + Space** both toggle between day/night
+- ✅ **Pixel‑aligned layout** — matches [sunlit.pages.dev](https://sunlit.pages.dev/)
+- ✅ Fully accessible — respects `prefers-reduced-motion` and `prefers-contrast`
 
 ## Layout Alignment
 
