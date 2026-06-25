@@ -230,33 +230,9 @@
       inspired by <a href="https://daylightcomputer.com/">daylight computer</a> and <a href="https://www.chloeyan.me/">chloe yan's</a> <a href="https://www.sunlit.place/">sunlit place</a>
     </p>
     <p>
-      <strong>adaptation:</strong> improved two‑layer <code>plus-lighter</code> blending from <a href="https://www.allaboutken.com/posts/sunlit-dappled-light-effect/">Ken Hawkins</a>
+      <strong>adaptation:</strong> improved two‑layer <code>plus‑lighter</code> blending from <a href="https://www.allaboutken.com/posts/sunlit-dappled-light-effect/">Ken Hawkins</a>
     </p>
-    <p>[press space to toggle the sun]</p>
   </article>
 
-  <script>
-    // Toggle day/night on click or space
-    let night = true;
-    function toggle() {
-      night = !night;
-      if (night) {
-        document.documentElement.style.setProperty('--light', 'var(--night)');
-        document.documentElement.style.setProperty('--dark', 'var(--day)');
-      } else {
-        document.documentElement.style.setProperty('--light', 'var(--day)');
-        document.documentElement.style.setProperty('--dark', 'var(--night)');
-      }
-    }
-    document.addEventListener('keydown', function(event) {
-      if (event.keyCode === 32) {
-        toggle();
-        event.preventDefault();
-      }
-    });
-    document.addEventListener('click', function() {
-      toggle();
-    });
-  </script>
 </body>
 </html>
