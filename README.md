@@ -18,18 +18,18 @@ Open `index.html` in your browser. Compare:
 |---------|---------------------------|-------------------------------|
 | Layers | 5 (glow, glow-bounce, leaves, blinds, blur) | **2** (leaves + blinds) |
 | Blending | multiply (darken) | **`plus-lighter` additive** for more natural lighting |
-| JavaScript | Required for time‑based animation | **Zero** – all effects in pure CSS |
+| JavaScript | Required for time‑based animation | Small script for **click/space toggle** (effect works without interaction) |
 | Blinds | 23 DOM elements | Pure CSS `repeating-linear-gradient`, **no extra DOM** needed |
 | Animation | Time-based color changes | Scroll-driven opacity fade + CSS parallax |
-| Build | Astro / Node | Pure HTML/CSS, **no build step needed** |
+| Build | Astro / Node | Pure HTML/CSS + tiny toggle script, **no build step needed** |
 
 ## Features
 
-- ✅ **Zero JavaScript** – all animations in pure CSS
 - ✅ **Two layers only** – leaves + perspective blinds
 - ✅ **Additive blending** (`mix-blend-mode: plus-lighter`) for a more natural light than multiply
 - ✅ **SVG turbulence** – natural wind animation on leaves
 - ✅ **Scroll‑driven fade** – opacity fades as you scroll via CSS scroll timeline (Chrome)
+- ✅ **Click/Space toggle** – click anywhere or press space to switch between day/night
 - ✅ **Fully accessible** – respects `prefers-reduced-motion` and `prefers-contrast`
 - ✅ **Performance** – Firefox automatically disables displacement map for better performance
 

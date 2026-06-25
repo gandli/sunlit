@@ -235,5 +235,28 @@
     <p>[press space to toggle the sun]</p>
   </article>
 
+  <script>
+    // Toggle day/night on click or space
+    let night = true;
+    function toggle() {
+      night = !night;
+      if (night) {
+        document.documentElement.style.setProperty('--light', 'var(--night)');
+        document.documentElement.style.setProperty('--dark', 'var(--day)');
+      } else {
+        document.documentElement.style.setProperty('--light', 'var(--day)');
+        document.documentElement.style.setProperty('--dark', 'var(--night)');
+      }
+    }
+    document.addEventListener('keydown', function(event) {
+      if (event.keyCode === 32) {
+        toggle();
+        event.preventDefault();
+      }
+    });
+    document.addEventListener('click', function() {
+      toggle();
+    });
+  </script>
 </body>
 </html>
