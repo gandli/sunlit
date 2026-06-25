@@ -1,0 +1,68 @@
+---
+import Sunlit from '../components/Sunlit.astro';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>sunlit</title>
+</head>
+  <body>
+    <Sunlit />
+    <article>
+      <h1>sunlit</h1>
+      <p>inspired by <a href="https://daylightcomputer.com/">daylight computer</a> and <a href="https://www.chloeyan.me/">chloe yan's</a> <a href="https://www.sunlit.place/">sunlit place</a></p>
+      <pre>[press <code>space</code> to toggle the sun]</pre>
+    </article>
+  </body>
+</html>
+
+<style is:global>
+  html {
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  article {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 40vh 0;
+    color: var(--dark);
+    isolation: isolate;
+    position: relative;
+    z-index: 2;
+  }
+
+  article a {
+    color: var(--dark);
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin: 0 0 1rem 0;
+    color: var(--dark);
+  }
+
+  p {
+    font-size: 1.25rem;
+    font-weight: normal;
+    color: var(--dark);
+    margin: 0;
+  }
+
+  pre {
+    font-size: 1rem;
+    font-family: monospace;
+    margin: 0.8rem 0 0 0;
+    color: var(--dark);
+  }
+
+  code {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 0.2em 0.4em;
+    border-radius: 3px;
+  }
+</style>
+

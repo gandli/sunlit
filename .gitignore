@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+.DS_Store
+
+# Astro
+.astro/
+cache/
+
+# Environment
+.env
+.env.local
+
+# Logs
+*.log
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
