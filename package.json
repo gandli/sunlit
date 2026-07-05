@@ -1,19 +1,26 @@
 {
-  "name": "sunlit-spec",
-  "version": "1.0.0",
+  "name": "sunlit-preact",
   "private": true,
-  "description": "Cross-branch consistency spec, Playwright acceptance tests, and reference screenshots for the Sunlit multi-framework matrix",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Sunlit — Preact 10 implementation via preact/compat. See SPEC.md on the `spec` branch.",
   "scripts": {
-    "test": "playwright test",
-    "test:ui": "playwright test --ui",
-    "test:dom": "playwright test dom-invariants",
-    "test:interaction": "playwright test interaction",
-    "test:visual": "playwright test visual",
-    "test:update-snapshots": "playwright test --update-snapshots",
-    "capture-reference": "node scripts/capture-reference.mjs"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test:unit": "vitest run tests/unit",
+    "test:e2e": "playwright test tests/e2e"
+  },
+  "dependencies": {
+    "preact": "^10.24.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.48.0"
+    "@playwright/test": "^1.55.0",
+    "@preact/preset-vite": "^2.9.1",
+    "@testing-library/jest-dom": "^6.4.5",
+    "@testing-library/preact": "^3.2.4",
+    "jsdom": "^25.0.0",
+    "vite": "^7.0.0",
+    "vitest": "^3.0.0"
   }
 }

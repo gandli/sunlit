@@ -1,10 +1,20 @@
+# Dependencies
 node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+.vite/
+
+# Test artifacts
 test-results/
 playwright-report/
 blob-report/
-playwright/.cache/
-.env
-.DS_Store
 
-# Reference screenshots are committed intentionally
-!spec/reference/*.png
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.log
+.env.local
+.env.*.local
