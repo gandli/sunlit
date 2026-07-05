@@ -13,7 +13,7 @@ npx playwright install chromium
 npm run capture-reference
 ```
 
-The screenshots are committed to git so downstream framework/* branches can validate against them offline.
+The screenshots are committed to git so downstream framework branches can validate against them offline.
 
 ## Notes on determinism
 
@@ -21,4 +21,4 @@ The screenshots are committed to git so downstream framework/* branches can vali
 - **Fonts**: system-ui varies across OS. Reference is captured on macOS.
 - **Tolerance**: SPEC §8.2 allows 0.5% pixel diff.
 
-If a framework/* branch cannot match within tolerance despite correct implementation, capture a per-framework baseline in that branch and document the deviation in that branch's README.
+If a framework branch cannot match within tolerance despite correct implementation, capture a per-framework baseline in that branch and document the deviation in that branch's README.

@@ -1,12 +1,12 @@
 # Sunlit 跨框架一致性规范 (SPEC v1.0)
 
-> **目的**：`sunlit` 项目由本仓库 fork 自 [jackyzha0/sunlit](https://github.com/jackyzha0/sunlit)。本仓库计划提供**多种前端框架的等价实现**：`framework/vue`、`framework/react`、`framework/svelte`、`framework/solid`、`framework/nuxt`、`framework/next`、`framework/preact`、`framework/lit` 等。本规范定义**所有框架分支必须共同遵守的视觉、DOM、行为契约**，作为跨分支验收测试（Playwright）的唯一真理源（Single Source of Truth, SSoT）。
+> **目的**：`sunlit` 项目由本仓库 fork 自 [jackyzha0/sunlit](https://github.com/jackyzha0/sunlit)。本仓库计划提供**多种前端框架的等价实现**：`vue`、`react`、`svelte`、`solid`、`nuxt`、`next`、`preact`、`lit` 等分支。本规范定义**所有框架分支必须共同遵守的视觉、DOM、行为契约**，作为跨分支验收测试（Playwright）的唯一真理源（Single Source of Truth, SSoT）。
 >
 > 📌 **视觉基准**：<https://sunlit.pages.dev>（jackyzha0 生产站，原作者维护）
 >
 > 🔒 **只读分支**：`main` 分支保持与上游 `jackyzha0/sunlit` 完全一致，**永不修改**。所有修复和扩展在其它分支进行。
 >
-> 🧭 **本分支（`spec`）职责**：仅承载规范文档、Playwright 测试骨架、参考截图。不包含任何框架实现代码。所有 `framework/*` 分支从本分支切出，继承 `SPEC.md` + `tests/` + `spec/reference/`。
+> 🧭 **本分支（`spec`）职责**：仅承载规范文档、Playwright 测试骨架、参考截图。不包含任何框架实现代码。所有框架分支从本分支切出，继承 `SPEC.md` + `tests/` + `spec/reference/`。
 
 ---
 
@@ -258,18 +258,18 @@ test.describe('DOM invariants', () => {
 
 ## 9. 上游状态与偏差记录
 
-`main` 分支**保持与上游 `jackyzha0/sunlit` 完全一致，永不修改**。以下记录上游存在的问题以及 `astro` 分支的偏差，作为 framework/* 分支实现时的**警示清单**——新分支不得引入这些偏差。
+`main` 分支**保持与上游 `jackyzha0/sunlit` 完全一致，永不修改**。以下记录上游存在的问题以及 `astro` 分支的偏差，作为框架分支实现时的**警示清单**——新分支不得引入这些偏差。
 
-### 9.1 上游 `main` 的已知问题（framework 分支必须避免）
+### 9.1 上游 `main` 的已知问题（框架分支必须避免）
 
-| # | 位置 | 现象 | framework/* 分支应采用 |
+| # | 位置 | 现象 | 框架分支应采用 |
 |---|---|---|---|
 | U1 | `index.css` `.vertical > .bar` | `width: 5;` **缺 `px` 单位**，垂直分隔杆渲染宽度为 0 | `width: 5px;` |
 | U2 | `index.css` `#progressive-blur` | `position: absolute`，随文档滚动 | `position: fixed; z-index: 1;` |
 | U3 | `index.html` | 缺 `aria-hidden`、`lang`、`viewport` | 见 §6 |
 | U4 | 无降级 | 缺 `prefers-reduced-motion` / `prefers-contrast` | 必须实现 |
 
-> 📌 U1 是**明确的 CSS 错误**（缺失单位），非设计选择。生产站 <https://sunlit.pages.dev> 的黄金截图仍以 main 分支为基准，垂直杆的"消失"是既定视觉效果的一部分。framework/* 分支可自行选择：**A) 复刻 bug 求像素一致**；**B) 修正为 5px 求视觉正确**。建议 **B**，并在该分支 README 声明。
+> 📌 U1 是**明确的 CSS 错误**（缺失单位），非设计选择。生产站 <https://sunlit.pages.dev> 的黄金截图仍以 main 分支为基准，垂直杆的"消失"是既定视觉效果的一部分。框架分支可自行选择：**A) 复刻 bug 求像素一致**；**B) 修正为 5px 求视觉正确**。建议 **B**，并在该分支 README 声明。
 
 ### 9.2 `astro` 分支已知偏差（需修复）
 
@@ -278,7 +278,7 @@ test.describe('DOM invariants', () => {
 | A1 | `Sunlit.astro:252` | `leaves.png` 外链 `https://raw.githubusercontent.com/jackyzha0/sunlit/main/leaves.png` | 改为本地 `/leaves.png`，`public/leaves.png` 从 upstream 拷入 |
 | A2 | `Sunlit.astro:352-355` | 点击切换被注释禁用 | 恢复 `document.addEventListener('click', toggle)` |
 
-### 9.3 framework/* 分支实现要求
+### 9.3 框架分支实现要求
 
 所有新框架分支必须：
 1. ✅ 修正 U1（`width: 5px`）
@@ -322,17 +322,17 @@ matrix3d(
 | `adaptation` | 🔒 只读 | Ken Hawkins 零 JS 版实现，独立保留 |
 | `astro` | 🛠 需修复 | Astro 版；按 §9.2 修复 A1、A2 |
 | `spec` | ✅ 本分支 | 规范文档 + Playwright 测试 + 参考截图 |
-| `framework/vue` | ⏳ 待建 | Vue 3 + Vite + `<script setup>` |
-| `framework/react` | ⏳ 待建 | React 19 + Vite |
-| `framework/svelte` | ⏳ 待建 | Svelte 5 Runes + Vite |
-| `framework/solid` | ⏳ 待建 | SolidJS + Vite |
-| `framework/nuxt` | 🕐 后续 | Nuxt 3 静态生成 |
-| `framework/next` | 🕐 后续 | Next 15 静态导出 |
-| `framework/preact` | 🕐 后续 | Preact + Vite |
-| `framework/lit` | 🕐 后续 | Lit 3 Web Component |
+| `vue` | ⏳ 待建 | Vue 3 + Vite + `<script setup>` |
+| `react` | ⏳ 待建 | React 19 + Vite |
+| `svelte` | ⏳ 待建 | Svelte 5 Runes + Vite |
+| `solid` | ⏳ 待建 | SolidJS + Vite |
+| `nuxt` | 🕐 后续 | Nuxt 3 静态生成 |
+| `next` | 🕐 后续 | Next 15 静态导出 |
+| `preact` | 🕐 后续 | Preact + Vite |
+| `lit` | 🕐 后续 | Lit 3 Web Component |
 
 **新增框架分支流程**：
-1. 从 `spec` 分支切出 `framework/<name>`（继承 SPEC.md + tests/ + spec/reference/）
+1. 从 `spec` 分支切出新分支（直接用框架名，如 `vue`、`react`；无前缀），继承 SPEC.md + tests/ + spec/reference/
 2. 从 upstream `main` 拷贝 `leaves.png` 到该分支的静态资源目录
 3. 组件化拆分：`DappledLight` / `Blinds` / `Leaves` / `ProgressiveBlur` / `SunToggle`
 4. 交互逻辑抽离到 `useSunToggle`（composable / hook / store）

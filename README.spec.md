@@ -5,7 +5,7 @@ This is the **`spec` branch** of [gandli/sunlit](https://github.com/gandli/sunli
 ## Purpose
 
 `main` and `adaptation` branches mirror upstream — **read-only**.
-This branch defines the **cross-branch consistency contract** that all future `framework/*` implementations (Vue, React, Svelte, Solid, Nuxt, Next, Preact, Lit…) must satisfy.
+This branch defines the **cross-branch consistency contract** that all future framework implementations (Vue, React, Svelte, Solid, Nuxt, Next, Preact, Lit…) must satisfy. Each implementation lives on its own branch named after the framework (`vue`, `react`, `svelte`, …) — no `framework/` prefix.
 
 ## Contents
 
@@ -18,11 +18,11 @@ This branch defines the **cross-branch consistency contract** that all future `f
 | `scripts/capture-reference.mjs` | 📷 Regenerate golden screenshots |
 | `playwright.config.js` | ⚙️ Test runner config (baseURL overridable) |
 
-## Usage from a `framework/*` branch
+## Usage from a framework branch
 
 ```bash
 # 1. Cherry-pick this branch's test infrastructure into your framework branch
-git checkout framework/vue
+git checkout vue
 git checkout spec -- SPEC.md spec/ tests/ playwright.config.js scripts/
 
 # 2. Install
@@ -44,10 +44,10 @@ npm test              # defaults to https://sunlit.pages.dev
 main (read-only, jackyzha0 mirror)
   │
   └─── spec (this branch: SPEC + tests + references)
-         ├─── framework/vue    (Vue 3 + Vite)
-         ├─── framework/react  (React 19 + Vite)
-         ├─── framework/svelte (Svelte 5 + Vite)
-         └─── framework/solid  (SolidJS + Vite)
+         ├─── vue     (Vue 3 + Vite)
+         ├─── react   (React 19 + Vite)
+         ├─── svelte  (Svelte 5 + Vite)
+         └─── solid   (SolidJS + Vite)
 ```
 
 ## Related
