@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!--
+    Sunlit favicon
+    - Warm cream backdrop (matches SPEC --day palette)
+    - Sun disc (dusk color)
+    - 5 horizontal blinds bars (matches SPEC #blinds > .shutters shape)
+  -->
+  <rect width="64" height="64" rx="12" fill="#fffdfa"/>
+  <circle cx="32" cy="30" r="14" fill="#db7a2a"/>
+  <g fill="#1a1917">
+    <rect x="6" y="10" width="52" height="4" rx="1"/>
+    <rect x="6" y="22" width="52" height="4" rx="1"/>
+    <rect x="6" y="34" width="52" height="4" rx="1"/>
+    <rect x="6" y="46" width="52" height="4" rx="1"/>
+  </g>
+</svg>
