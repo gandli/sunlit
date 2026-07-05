@@ -1,19 +1,29 @@
 {
-  "name": "sunlit-spec",
-  "version": "1.0.0",
+  "name": "sunlit-vue",
   "private": true,
-  "description": "Cross-branch consistency spec, Playwright acceptance tests, and reference screenshots for the Sunlit multi-framework matrix",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Sunlit — Vue 3 implementation. Cross-branch consistency baseline: see SPEC.md on the `spec` branch.",
   "scripts": {
-    "test": "playwright test",
-    "test:ui": "playwright test --ui",
-    "test:dom": "playwright test dom-invariants",
-    "test:interaction": "playwright test interaction",
-    "test:visual": "playwright test visual",
-    "test:update-snapshots": "playwright test --update-snapshots",
+    "dev": "vite --port 5173",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test --project=chromium",
+    "test:e2e:local": "SUNLIT_URL=http://localhost:5173 playwright test --project=chromium",
     "capture-reference": "node scripts/capture-reference.mjs"
   },
+  "dependencies": {
+    "vue": "^3.5.13"
+  },
   "devDependencies": {
-    "@playwright/test": "^1.48.0"
+    "@playwright/test": "^1.48.0",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^25.0.1",
+    "vite": "^8.1.3",
+    "vitest": "^4.1.9"
   }
 }
