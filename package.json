@@ -1,19 +1,31 @@
 {
-  "name": "sunlit-spec",
-  "version": "1.0.0",
+  "name": "sunlit-react",
   "private": true,
-  "description": "Cross-branch consistency spec, Playwright acceptance tests, and reference screenshots for the Sunlit multi-framework matrix",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Sunlit — React 19 implementation. Cross-branch consistency baseline: see SPEC.md on the `spec` branch.",
   "scripts": {
-    "test": "playwright test",
-    "test:ui": "playwright test --ui",
-    "test:dom": "playwright test dom-invariants",
-    "test:interaction": "playwright test interaction",
-    "test:visual": "playwright test visual",
-    "test:update-snapshots": "playwright test --update-snapshots",
-    "capture-reference": "node scripts/capture-reference.mjs"
+    "dev": "vite --port 5173",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test --project=chromium",
+    "test:e2e:local": "SUNLIT_URL=http://localhost:5173 playwright test --project=chromium"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.48.0"
+    "@playwright/test": "^1.48.0",
+    "@testing-library/react": "^16.1.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "jsdom": "^25.0.1",
+    "vite": "^7.0.0",
+    "vitest": "^3.0.0"
   }
 }
