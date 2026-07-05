@@ -1,0 +1,19 @@
+{
+  "name": "sunlit-spec",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cross-branch consistency spec, Playwright acceptance tests, and reference screenshots for the Sunlit multi-framework matrix",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:dom": "playwright test dom-invariants",
+    "test:interaction": "playwright test interaction",
+    "test:visual": "playwright test visual",
+    "test:update-snapshots": "playwright test --update-snapshots",
+    "capture-reference": "node scripts/capture-reference.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0"
+  }
+}
