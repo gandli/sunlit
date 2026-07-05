@@ -290,6 +290,106 @@ test.describe('DOM invariants', () => {
 
 ---
 
+## 10. Favicon 与 OG image（跨分支资源合约）
+
+所有框架分支的 `public/` 目录**必须**包含：
+
+| 文件 | 尺寸 | 用途 |
+|---|---|---|
+| `favicon.svg` | 64×64 viewBox | 浏览器标签图标（SVG 优先） |
+| `og-image.png` | 1200×630 | Open Graph / Twitter Card 社交分享 |
+| `leaves.png` | 原始尺寸 | 树叶背景位图（从 upstream 复制） |
+
+`index.html` `<head>` 必须包含（分支特定字段用 `{fw}` 占位）：
+
+```html
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:title" content="Sunlit — {Framework Name}" />
+<meta property="og:description" content="..." />
+<meta property="og:image" content="https://sunlit-{fw}.pages.dev/og-image.png" />
+<meta property="og:url" content="https://sunlit-{fw}.pages.dev/" />
+<meta name="twitter:card" content="summary_large_image" />
+```
+
+**共享脚本**：`scripts/render-og-image.mjs`（Playwright headless Chromium 从 `/tmp/og-template.html` 渲染，避免手动导出）。
+
+---
+
+## 11. 跨框架实现陷阱（React 分支验证过的三大坑）
+
+⚠️ **所有响应式框架分支（React、Solid、Preact 等）实现 `useSunToggle` 时必须避免以下三个陷阱。这些是 vue 分支之后在 react 分支 4 次迭代才捕获的教训。**
+
+### 11.1 `useEffect` 挂载 listener 太晚
+
+**症状**：`page.goto('/')` 返回后立即 `page.keyboard.press('Space')` 无反应；页面已渲染但 keydown listener 尚未挂上。
+
+**根因**：React 的 `useEffect` 在浏览器 paint **之后**才异步执行；Playwright 的 `goto` 返回时 DOM 已就绪但 effect 未跑。
+
+**修复**：在 root hook 中用 `useLayoutEffect` 挂载键盘 listener（在 paint **之前**同步执行）：
+
+```jsx
+useLayoutEffect(() => {
+  window.addEventListener('keydown', onKeydown);
+  return () => window.removeEventListener('keydown', onKeydown);
+}, [toggle]);
+```
+
+对应 Solid 用 `createEffect`（默认同步），Svelte 用 `$effect.pre()`，Vue 用 `onMounted`（默认在 DOM 就绪后同步）。
+
+### 11.2 React StrictMode 双挂载导致 `useRef` 状态漂移
+
+**症状**：单元测试通过，但生产 dev server 里 `useRef(false)` 存的 `dark` 状态与 DOM 不同步。
+
+**根因**：StrictMode 在开发环境双挂载 hook；两次 mount 各自创建独立的 ref 实例，但 DOM 只有一个 body。
+
+**修复**：**DOM 是单一事实源**（DOM as single source of truth）。所有状态直接读写 `document.body.classList`，不用 `useRef` 缓存：
+
+```jsx
+const toggle = useCallback(() => {
+  const body = document.body;
+  if (!body.classList.contains('animation-ready')) {
+    body.classList.add('animation-ready');
+  }
+  body.classList.toggle('dark');
+}, []);
+```
+
+这符合 SPEC §5 的语义：**`body.dark` 类本身就是主题状态**。
+
+### 11.3 `document.addEventListener('click', ...)` 让 body 变 clickable
+
+**症状**：Playwright `keyboard.press('Space')` 在 body 焦点时，除了触发 keydown，还合成了一次 click，导致 toggle 被调用两次。
+
+**根因**：把 click listener 挂到 `document` 或 `body` 后，A11y tree 里 body 变成 `[onclick]` clickable —— Playwright 内部会为 clickable 元素补发 click。
+
+**修复**：**click 事件绑到 App root `<div onClick>`**（React 合成事件），而非 `document.addEventListener`：
+
+```jsx
+export default function App() {
+  const { toggle } = useSunToggle();
+  return (
+    <div onClick={toggle}>
+      <DappledLight />
+      <Article />
+    </div>
+  );
+}
+```
+
+click 事件依然从任意元素冒泡到 root div，SPEC §5「document 上任意 click 切换 dark」的语义完全保留。
+
+### 11.4 跨框架映射表
+
+| 陷阱 | React | Vue 3 | Svelte 5 | Solid |
+|---|---|---|---|---|
+| 早挂载 listener | `useLayoutEffect` | `onMounted`（默认同步） | `$effect.pre()` | `createEffect` |
+| 单一事实源 | DOM 而非 ref | `.value` OK | rune OK | signal OK |
+| 避免 body click | root `<div onClick>` | root `@click` | root `on:click` | root `onClick` |
+
+Vue 分支之所以顺利，是因为 Composition API `onMounted` **默认在 DOM 就绪后同步执行**，且没有 StrictMode 双挂载 —— 相当于天然规避了 11.1 和 11.2。
+
+---
+
 ## 附录 A：`.perspective` matrix3d 值
 
 **Day**：
@@ -320,10 +420,10 @@ matrix3d(
 |---|---|---|
 | `main` | 🔒 只读 | 上游 `jackyzha0/sunlit` 原版镜像，永不修改 |
 | `adaptation` | 🔒 只读 | Ken Hawkins 零 JS 版实现，独立保留 |
-| `astro` | 🛠 需修复 | Astro 版；按 §9.2 修复 A1、A2 |
+| `astro` | ✅ 已交付 | Astro 4 版；U1-U4 已修复 |
 | `spec` | ✅ 本分支 | 规范文档 + Playwright 测试 + 参考截图 |
-| `vue` | ⏳ 待建 | Vue 3 + Vite + `<script setup>` |
-| `react` | ⏳ 待建 | React 19 + Vite |
+| `vue` | ✅ 已交付 | Vue 3 + Vite + `<script setup>` |
+| `react` | ✅ 已交付 | React 19 + Vite + hooks + StrictMode |
 | `svelte` | ⏳ 待建 | Svelte 5 Runes + Vite |
 | `solid` | ⏳ 待建 | SolidJS + Vite |
 | `nuxt` | 🕐 后续 | Nuxt 3 静态生成 |
@@ -336,11 +436,15 @@ matrix3d(
 2. 从 upstream `main` 拷贝 `leaves.png` 到该分支的静态资源目录
 3. 组件化拆分：`DappledLight` / `Blinds` / `Leaves` / `ProgressiveBlur` / `SunToggle`
 4. 交互逻辑抽离到 `useSunToggle`（composable / hook / store）
-5. 遵守 §9.3 的全部要求
-6. 运行 `npm test` 全部通过
-7. 部署到 `sunlit-<name>.pages.dev`
+5. **对响应式框架分支（React / Solid / Preact）：阅读并遵守 §11 三个陷阱的规避方案**
+6. 遵守 §9.3 的全部要求
+7. 落地 §10 的 Favicon + OG image 资源
+8. 运行 `npm test` 全部通过
+9. 部署到 `sunlit-<name>.pages.dev`
 
 ---
 
 **版本历史**：
 - v1.0（2026-07-05）：初版规范，包含 DOM 不变量、主题令牌、交互合约、跨分支验收测试
+- v1.1（2026-07-05）：分支命名统一（无 `framework/` 前缀）
+- v1.2（2026-07-05）：新增 §10 Favicon/OG image 合约、§11 跨框架实现陷阱（react 分支交付后回填）
