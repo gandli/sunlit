@@ -30,6 +30,10 @@ export default defineConfig({
     deviceScaleFactor: 1,
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
+    // Nuxt-specific: wait for SSG hydration to attach the keydown listener
+    // before Playwright starts firing input events. Other branches don't
+    // need this but honouring the flag is harmless — they never set it.
+    navigationTimeout: 15_000,
   },
   projects: [
     {

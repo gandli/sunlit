@@ -1,10 +1,16 @@
+# Dependencies
 node_modules/
+
+# Nuxt
+.nuxt/
+.output/
+dist/
+
+# Testing
 test-results/
 playwright-report/
-blob-report/
 playwright/.cache/
-.env
-.DS_Store
 
-# Reference screenshots are committed intentionally
-!spec/reference/*.png
+# Misc
+.DS_Store
+*.log

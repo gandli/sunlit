@@ -1,19 +1,27 @@
 {
-  "name": "sunlit-spec",
-  "version": "1.0.0",
+  "name": "sunlit-nuxt",
   "private": true,
-  "description": "Cross-branch consistency spec, Playwright acceptance tests, and reference screenshots for the Sunlit multi-framework matrix",
-  "type": "module",
+  "version": "1.0.0",
+  "description": "Sunlit — Nuxt 4 implementation. See SPEC.md on the `spec` branch.",
   "scripts": {
-    "test": "playwright test",
-    "test:ui": "playwright test --ui",
-    "test:dom": "playwright test dom-invariants",
-    "test:interaction": "playwright test interaction",
-    "test:visual": "playwright test visual",
-    "test:update-snapshots": "playwright test --update-snapshots",
-    "capture-reference": "node scripts/capture-reference.mjs"
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "test:unit": "vitest run tests/unit",
+    "test:e2e": "playwright test tests/e2e"
+  },
+  "dependencies": {
+    "nuxt": "^4.0.0",
+    "vue": "^3.5.0"
   },
   "devDependencies": {
-    "@playwright/test": "^1.48.0"
+    "@playwright/test": "^1.55.0",
+    "@testing-library/jest-dom": "^6.4.5",
+    "@vitejs/plugin-vue": "^6.0.7",
+    "@vue/test-utils": "^2.4.6",
+    "jsdom": "^25.0.0",
+    "vitest": "^3.0.0"
   }
 }
