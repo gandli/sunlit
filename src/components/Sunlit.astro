@@ -249,7 +249,7 @@ body.dark {
   right: -700px;
   width: 1600px;
   height: 1400px;
-  background-image: url(https://raw.githubusercontent.com/jackyzha0/sunlit/main/leaves.png);
+  background-image: url(/leaves.png);
   filter: url(#wind);
   animation: billow 8s ease-in-out infinite;
 }
@@ -344,13 +344,11 @@ function toggle() {
 }
 
 document.addEventListener('keydown', function(event) {
-  if (event.keyCode === 32) {
+  if (event.code === 'Space') {
     toggle();
   }
 });
 
-// Only allow spacebar toggle, no click toggle
-// document.addEventListener('click', function() {
-//   toggle();
-// });
+// SPEC §5: click on document toggles as well
+document.addEventListener('click', toggle);
 </script>
